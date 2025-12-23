@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+pydantic
+pytest
+coverage
+python-multipart
+httpx
+jinja2
+black
+colorama
+google-generativeai
+python-dotenv
