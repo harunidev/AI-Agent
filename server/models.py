@@ -11,6 +11,9 @@ class TestGenerationResponse(BaseModel):
     test_code: str
     explanation: str
     coverage_estimate: Optional[float] = None
+    breakdown_stats: Optional[dict] = None
+    total_tests: Optional[int] = 0
+    tested_functions: Optional[int] = 0
 
 class CoverageRequest(BaseModel):
     source_code: str

@@ -63,6 +63,33 @@ body {
   min-height: 100vh;
 }
 
+/* Floating corner elements */
+.corner-logo {
+  position: fixed;
+  top: 1rem;
+  left: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  z-index: 100;
+}
+
+.corner-logo span {
+  font-size: 0.6em;
+  font-weight: 400;
+  opacity: 0.7;
+  color: var(--color-text-muted);
+}
+
+.corner-status {
+  position: fixed;
+  top: 1rem;
+  right: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  z-index: 100;
+}
+
 /* Typography */
 h1,
 h2,
@@ -745,12 +772,12 @@ h3 {
 
 .breakdown-badge {
   margin-left: auto;
-  background: rgba(139, 92, 246, 0.3);
-  color: var(--color-primary-light);
+  background: rgba(16, 185, 129, 0.25);
+  color: #34d399;
   padding: 0.25rem 0.75rem;
   border-radius: 12px;
-  font-size: 0.875rem;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 700;
 }
 
 /* Collapsible Test Code */
@@ -819,18 +846,24 @@ h3 {
   line-height: 1.6;
 }
 
-/* Prism Theme Customization for Black/Red/Yellow Theme */
+/* Remove all underlines from code */
+.code-block *,
+.token {
+  text-decoration: none !important;
+}
+
+/* Prism Theme Customization for Emerald/Success Theme */
 .token.comment,
 .token.prolog,
 .token.doctype,
 .token.cdata {
-  color: #71717a !important;
-  /* Zinc 500 */
+  color: #6b7280 !important;
+  /* Gray 500 */
 }
 
 .token.punctuation {
-  color: #a1a1aa !important;
-  /* Zinc 400 */
+  color: #9ca3af !important;
+  /* Gray 400 */
 }
 
 .token.property,
@@ -840,8 +873,8 @@ h3 {
 .token.constant,
 .token.symbol,
 .token.deleted {
-  color: #f59e0b !important;
-  /* Amber (Yellow) */
+  color: #34d399 !important;
+  /* Emerald 400 */
 }
 
 .token.selector,
@@ -850,8 +883,8 @@ h3 {
 .token.char,
 .token.builtin,
 .token.inserted {
-  color: #ef4444 !important;
-  /* Red */
+  color: #a7f3d0 !important;
+  /* Emerald 200 */
 }
 
 .token.operator,
@@ -859,28 +892,28 @@ h3 {
 .token.url,
 .language-css .token.string,
 .style .token.string {
-  color: #f59e0b !important;
-  /* Amber */
+  color: #6ee7b7 !important;
+  /* Emerald 300 */
 }
 
 .token.atrule,
 .token.attr-value,
 .token.keyword {
-  color: #ef4444 !important;
-  /* Red */
+  color: #10b981 !important;
+  /* Emerald 500 */
 }
 
 .token.function,
 .token.class-name {
-  color: #fbbf24 !important;
-  /* Amber 400 (Ligher Yellow) */
+  color: #5eead4 !important;
+  /* Teal 300 */
 }
 
 .token.regex,
 .token.important,
 .token.variable {
-  color: #fca5a5 !important;
-  /* Red 300 */
+  color: #2dd4bf !important;
+  /* Teal 400 */
 }
 
 

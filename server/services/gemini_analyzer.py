@@ -21,6 +21,27 @@ def initialize_gemini() -> bool:
         print(f"Gemini initialization error: {e}")
         return False
 
+import time
+import random
+
+def _generate_with_retry(model, prompt, **kwargs):
+    """Helper to retry API calls on rate limit errors."""
+    max_retries = 1 
+    base_delay = 2.0
+    
+    for attempt in range(max_retries + 1):
+        try:
+            return model.generate_content(prompt, **kwargs)
+        except Exception as e:
+            if "429" in str(e) or "quota" in str(e).lower():
+                if attempt < max_retries:
+                    delay = base_delay * (2 ** attempt) + random.uniform(0, 1)
+                
+                    time.sleep(delay)
+                    continue
+            raise e
+
+
 def analyze_code_quality(source_code: str, language: str = "python") -> Dict:
     """
     Analyze code quality using Gemini AI.
@@ -51,7 +72,8 @@ Return this exact JSON structure:
 
 IMPORTANT: Return ONLY the JSON object, nothing else."""
 
-        response = model.generate_content(
+        response = _generate_with_retry(
+            model,
             prompt,
             request_options={'timeout': 20}
         )
@@ -132,7 +154,7 @@ Provide a JSON response with:
 
 Return ONLY valid JSON, no markdown formatting."""
 
-        response = model.generate_content(prompt)
+        response = _generate_with_retry(model, prompt)
         
         result_text = response.text.strip()
         if result_text.startswith("```"):
@@ -155,7 +177,7 @@ def generate_smart_tests(source_code: str, code_analysis: Dict, language: str = 
     
     try:
         model = genai.GenerativeModel(
-            'models/gemini-2.5-flash',
+            'models/gemini-pro',
             generation_config={
                 'temperature': 0.3,  # Lower for faster, more focused responses
                 'max_output_tokens': 2048,  # Limit output length
@@ -174,7 +196,8 @@ Generate concise tests covering main functions, edge cases, and errors. Target >
 
 Return Python code only."""
 
-        response = model.generate_content(
+        response = _generate_with_retry(
+            model,
             prompt,
             request_options={'timeout': 30}  # 30 second timeout
         )
@@ -225,7 +248,7 @@ def improve_tests_with_ai(source_code: str, current_tests: str, coverage_analysi
 
 Add new test cases to cover the missing scenarios. Return ONLY the complete improved test code, no explanations."""
 
-        response = model.generate_content(prompt)
+        response = _generate_with_retry(model, prompt)
         improved_tests = response.text.strip()
         
         # Remove markdown code blocks if present
@@ -289,7 +312,8 @@ REQUIREMENTS:
 
 Generate the complete test file now:"""
 
-        response = model.generate_content(
+        response = _generate_with_retry(
+            model,
             prompt,
             request_options={'timeout': 45}
         )
